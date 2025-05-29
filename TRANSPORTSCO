@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>نموذج تسجيل التلاميذ</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+    }
+    h2 { text-align: center; }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+    .success {
+      color: green;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>نموذج تسجيل التلاميذ</h2>
+  <form id="studentForm">
+    <input type="text" name="name" placeholder="الاسم الكامل" required />
+    <input type="number" name="age" placeholder="السن" required />
+    <input type="text" name="address" placeholder="المسكن" required />
+    <input type="number" step="0.1" name="distance" placeholder="البعد عن المدرسة (كم)" required />
+    <button type="submit">إرسال</button>
+  </form>
+  <div class="success" id="message"></div>
+
+  <script>
+    const form = document.getElementById('studentForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = new FormData(form);
+      fetch('https://script.google.com/macros/s/AKfycbwIjnVK41i5TLhJiq88C1AFkTh14igjuOJTISLnOGiHdGclL8nXysBZuwDfCPZZN25-iQ/exec', {
+        method: 'POST',
+        body: data
+      })
+      .then(response => response.text())
+      .then(result => {
+        document.getElementById('message').textContent = 'تم حفظ البيانات بنجاح!';
+        form.reset();
+      })
+      .catch(error => {
+        document.getElementById('message').textContent = 'حدث خطأ، حاول مرة أخرى.';
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
